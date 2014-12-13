@@ -1,0 +1,19 @@
+# -*- coding: utf-8 -*-
+
+from datetime import datetime, timedelta, date
+from utils.data import prepare_datetime
+
+
+#now = datetime.now()
+#
+#calc = now - timedelta(days=1)
+#
+#
+#print calc.strftime('%d.%m.%Y')
+#print datetime(now.year, 1, 2)
+#print date.today()
+
+
+print(prepare_datetime('Сегодня 12:18'))
+print(prepare_datetime('Вчера 12:18'))
+print(prepare_datetime('8 дек. 12:18'))
