@@ -25,7 +25,7 @@ def build_url(path):
 def list_view_pages(str):
     page_num = 1
     while True:
-        url = build_url("/smolensk?p=%s&q=%s" % (page_num, str))
+        url = build_url("/smolensk/bytovaya_elektronika?bt=1&p=%s&q=%s" % (page_num, str))
         page = get(url)
         view = html.fromstring(page.text)
         if view.xpath("//div[@class='nulus']"):
