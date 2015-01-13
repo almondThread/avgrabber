@@ -69,6 +69,7 @@ def search(strs):
     lines = []
     for str in strs:
         lines += search_by_query(str)
-    return lines
+    unique_lines = list({l['id']: l for l in lines}.values())
+    return unique_lines
 
 

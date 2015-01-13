@@ -17,28 +17,27 @@ def list_projects():
     return DBSession().query(Project).all()
 
 
-def list_updates(project_name=None):
-    if project_name:
-        return DBSession().query(Project)\
-            .filter(Project.name == project_name).first()
-    else:
-        return DBSession().query(Project).all()
+def list_updates(project_name):
+    return DBSession().query(Update).join(Project)\
+        .filter(Project.name == project_name).all()
 
 def update_project(project_name):
-    p = DBSession().query(Project)\
-        .filter(Project.name == project_name)
+    project = DBSession().query(Project)\
+        .filter(Project.name == project_name)\
+        .first()
 
-    if p:
-        data_lines = grabber.search(p.query)
-        ads = add_update(data_lines)
+    if project:
+        data_lines = grabber.search(project.query.split(','))
+        ads = add_update(data_lines, project)
         return ads
     else:
         return None
 
 
-def resolve_state(ad):
-    prev_ad = DBSession.query(Ad).join(Update)\
+def resolve_state(ad, project):
+    prev_ad = DBSession().query(Ad).join(Update).join(Project)\
         .filter(Ad.id == ad.id)\
+        .filter(Project.id == project.id)\
         .order_by(desc(Update.at))\
         .first()
     if not prev_ad:
@@ -51,15 +50,15 @@ def resolve_state(ad):
     return state
 
 
-def add_update(data_lines):
+def add_update(data_lines, project):
     ads = []
     for data_line in data_lines:
         ad = Ad.from_dict(data_line)
-        ad.state = resolve_state(ad)
+        ad.state = resolve_state(ad, project)
         if ad.state in ['new', 'changed']:
             ads.append(ad)
 
-    update = Update(at=datetime.now())
+    update = Update(at=datetime.now(), project=project)
     DBSession().add(update)
     for ad in ads:
         ad.update = update

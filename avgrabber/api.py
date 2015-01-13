@@ -27,5 +27,10 @@ def list_updates(project):
     updates = core.list_updates(project)
     lines = []
     for update in updates:
-        lines.append(update.to_dict())
+        line = dict(at=update.at)
+        ad_lines = []
+        for ad in update.ads:
+            ad_lines.append(ad.to_dict())
+        line['ads'] = ad_lines
+        lines.append(line)
     return lines

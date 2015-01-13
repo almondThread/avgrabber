@@ -18,7 +18,10 @@ from avgrabber.grabber.utils import prepare_datetime
 #print(prepare_datetime('8 дек. 12:18'))
 
 
-d = {1: 'a', 2: 123}
+#d = {1: 'a', 2: 123}
+#
+#for k,v in d.items():
+#    print(k, v)
 
-for k,v in d.items():
-    print(k, v)
+import os
+print(os.environ['HOME'])
