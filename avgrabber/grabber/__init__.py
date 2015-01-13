@@ -1,1 +1,3 @@
-__author__ = 'almond'
+from .core import search
+
+

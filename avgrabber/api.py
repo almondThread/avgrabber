@@ -1,12 +1,31 @@
 # -*- coding: utf-8 -*-
-from .grabber import core as grabber
-from .handler.core import add_update
+from avgrabber import core
 
-def search(strs):
-    data_lines = grabber.search(strs)
-    ads = add_update(data_lines)
+
+def update_project(project):
+    ads = core.update_project(project)
     lines = []
     for ad in ads:
         lines.append(ad.to_dict())
     return lines
 
+
+def list_projects():
+    projects = core.list_projects()
+    lines = []
+    for project in projects:
+        lines.append(project.to_dict())
+    return lines
+
+
+def new_project(name, query):
+    project = core.new_project(name, query)
+    return project.to_dict()
+
+
+def list_updates(project):
+    updates = core.list_updates(project)
+    lines = []
+    for update in updates:
+        lines.append(update.to_dict())
+    return lines
