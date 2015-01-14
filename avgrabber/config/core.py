@@ -34,7 +34,7 @@ config = Config()
 
 def get_project_dir():
     import avgrabber
-    return normpath(dirname(avgrabber.__file__))
+    return normpath(join(dirname(avgrabber.__file__), '..'))
 
 class Settings:
     DEBUG = False
